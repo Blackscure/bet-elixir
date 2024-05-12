@@ -1,0 +1,134 @@
+<div class="flex h-screen bg-gray-200">
+  <!-- Sidebar -->
+ <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href={~p"/dashboard"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+             <a href={~p"/users"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Users
+            </a>
+            <a href={~p"/roles"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Roles
+            </a>
+            <a href={~p"/permissions"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Permissions
+            </a>
+            <a ref={~p"/teams"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Teams
+            </a>
+            <a href={~p"/leagues"}class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Leagues
+            </a>
+            <a ref={~p"/matches"}class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Matches
+            </a>
+            <a href={~p"/history"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Bet Histrory
+            </a>
+            <a href={~p"/wallets"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Wallet
+            </a>
+        </nav>
+       
+    </aside>
+  <!-- Main content -->
+<div class="flex flex-col flex-grow ml-2 mb-4 mr-4">
+<div class="flex justify-between mb-4 pt-4">
+  <!-- Button on the left -->
+  <a href={~p"/"} class="bg-orange-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded">
+    Back
+  </a>
+
+</div>
+
+ <div class="leading-loose">
+              <form class="p-10 bg-gray-900 rounded shadow-xl">
+                  <p class="text-lg text-white font-medium pb-4">Customer information</p>
+                 
+                  <div class="inline-block mt-2 w-1/2 pr-1">
+                     <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Away Team</label>
+                      <select id="small" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <option selected>Home Team</option>
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="FR">France</option>
+                          <option value="DE">Germany</option>
+                        </select>
+                  </div>
+                  <div class="inline-block mt-2 -mx-1 pl-1 w-1/2">
+                    <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Away Team</label>
+                      <select id="small" class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <option selected>Away Team</option>
+                      <option value="US">United States</option>
+                      <option value="CA">Canada</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
+                      </select>
+                  </div>
+
+                <div class="mb-5">
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Home Odd</label>
+                  <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Home Odd" required />
+              </div>
+
+              <div class="mb-5">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Away Odd</label>
+                <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Away Odd" required />
+            </div>
+
+            <div class="mb-5">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Draw Odd</label>
+                <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Draw Odd" required />
+            </div>
+
+          <div class="mb-5">
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Match date</label>
+              <input id="datepicker"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  type="text"placeholder="Select a date">
+          </div>
+
+          <div class="mb-5">
+             <label for="time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select time:</label>
+              <div class="relative">
+                  <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                          <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
+                      </svg>
+                  </div>
+                  <input type="time"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="time" min="09:00" max="18:00" value="00:00" required />
+              </div>
+          </div>
+
+    
+
+
+
+
+
+                  <div class="mt-6">
+                      <button class="px-4 py-1 text-white font-light tracking-wider bg-orange-700 rounded" type="submit">Save</button>
+                  </div>
+              </form>
+
+</div>
+<div class="relative overflow-x-auto shadow-md ">
+  
+</div>
+
+  </div>
+</div>
