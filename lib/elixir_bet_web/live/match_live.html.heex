@@ -103,7 +103,7 @@
         <%= for match <- @matches do %>
             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <%= match.home_team.name %> vs <%= match.away_team.name %>
+                <%= match.home_team_id %> vs <%= match.away_team_id %>
             </th>
             <td class="px-6 py-4">
                 <%= match.home_odd %>

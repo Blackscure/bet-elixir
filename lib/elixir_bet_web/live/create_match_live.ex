@@ -47,22 +47,22 @@ defmodule ElixirBetWeb.CreateMatchLive do
 
               <div class="w-full md:w-1/2 px-3">
                 <label for="home_team" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Home Team</label>
-                <select id="home_team" name="match[home_team_id]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <%= for team <- @teams do %>
-                    <option value="<%= team.id %>"><%= team.name %></option>
-                  <% end %>
-                </select>
+                  <select id="home_team" name="match[home_team_id]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <%= for team <- @teams do %>
+                      <option value="<%= team.id %>"><%= team.name %></option>
+                    <% end %>
+                  </select>
               </div>
             </div>
 
             <div class="flex flex-wrap -mx-3 mb-6">
               <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label for="away_team" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Away Team</label>
-                <select id="away_team" name="match[away_team_id]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <%= for team <- @teams do %>
-                    <option value="<%= team.id %>"><%= team.name %></option>
-                  <% end %>
-                </select>
+                    <select id="away_team" name="match[away_team_id]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <%= for team <- @teams do %>
+                        <option value="<%= team.id %>"><%= team.name %></option>
+                      <% end %>
+                    </select>
               </div>
 
               <div class="w-full md:w-1/2 px-3">
