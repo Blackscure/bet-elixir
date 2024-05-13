@@ -6,7 +6,7 @@ defmodule ElixirBet.Matches.Match do
     field :status, :string
     field :home_odd, :decimal
     field :away_odd, :decimal
-    field :match_time, :utc_datetime
+    field :match_time, :time
     field :match_date, :date
     belongs_to :home_team, ElixirBet.Teams.Team
     belongs_to :away_team, ElixirBet.Teams.Team

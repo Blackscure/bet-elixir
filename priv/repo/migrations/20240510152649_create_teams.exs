@@ -14,3 +14,4 @@ defmodule ElixirBet.Repo.Migrations.CreateTeams do
     create index(:teams, [:league_id])
   end
 end
+
