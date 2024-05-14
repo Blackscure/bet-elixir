@@ -75,6 +75,7 @@ defmodule ElixirBetWeb.Router do
       live "/permissions", PermissionLive
       live "/create-permission", CreatePermissionLive
       live "/leagues", LeagueLive
+      live "/home", LandPageLive
       live "/create-league", CreateLeagueLive
       live "/matches", MatchLive
       live "/users", ClientLive

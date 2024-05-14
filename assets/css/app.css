@@ -96,3 +96,16 @@ form input[type="text"], input[type="email"], input[type="password"]:focus {
         .active-nav-link { background: #FF5733; }
         .nav-item:hover { background: #FF5733; }
         .account-link:hover { background: #FF5733; }
+
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
