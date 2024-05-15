@@ -1,6 +1,7 @@
 <div class="flex h-screen bg-gray-200">
   <!-- Sidebar -->
  <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+       
         <nav class="text-white text-base font-semibold pt-3">
             <a href={~p"/dashboard"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tachometer-alt mr-3"></i>
@@ -30,10 +31,6 @@
                 <i class="fas fa-tablet-alt mr-3"></i>
                 Matches
             </a>
-            <a href={~p"/history"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-tablet-alt mr-3"></i>
-                Bet Histrory
-            </a>
             <a href={~p"/wallets"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tablet-alt mr-3"></i>
                 Wallet
@@ -53,7 +50,7 @@
 
   <!-- Main content -->
 <div class="flex flex-col flex-grow ml-2 mb-4 mr-4">
-  <h2 class="text-2xl font-semibold pt-4 float-left">Permissions</h2>
+  <h2 class="text-2xl font-semibold pt-4 float-left">Bet History</h2>
 
  <div class="flex justify-between mb-4 pt-4">
   <!-- Button on the left -->
@@ -61,10 +58,7 @@
     Back
   </a>
 
-  <!-- Button on the right -->
-  <a href={~p"/create-permission"} class="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-    Add Permission
-  </a>
+
 </div>
 
 
@@ -74,31 +68,41 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Role Name
+                    Bet
                 </th>
+                <th scope="col" class="px-6 py-3">
+                    Amount
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Stake
+                </th>
+                 <th scope="col" class="px-6 py-3">
+                    Outcome
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Match
+                </th>
+                
                
                 
 
-                <th scope="col" class="px-6 py-3">
+                <%!-- <th scope="col" class="px-6 py-3">
                     Action
-                </th>
+                </th> --%>
             </tr>
         </thead>
+        <%= if live_flash(@flash, :error) do %>
+            <p class="alert alert-danger" role="alert" phx-click="lsRemove" phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+        <% end %>
         <tbody>
-            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                
-               
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
+        
       
         </tbody>
     </table>
 </div>
-
   </div>
+  
 </div>

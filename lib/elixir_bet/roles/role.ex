@@ -5,6 +5,7 @@ defmodule ElixirBet.Roles.Role do
   schema "roles" do
     field :name, :string
     field :description, :string
+    has_many :users, ElixirBet.Accounts.User
 
     timestamps(type: :utc_datetime)
   end

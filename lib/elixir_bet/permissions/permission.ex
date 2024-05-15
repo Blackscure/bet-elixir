@@ -3,7 +3,8 @@ defmodule ElixirBet.Permissions.Permission do
   import Ecto.Changeset
 
   schema "permissions" do
-   
+    field :action, :string
+    field :resource, :string
     belongs_to :role, ElixirBet.Roles.Role
 
     timestamps(type: :utc_datetime)
