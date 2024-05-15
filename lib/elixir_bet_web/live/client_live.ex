@@ -1,10 +1,8 @@
 defmodule ElixirBetWeb.ClientLive do
   use ElixirBetWeb, :live_view
-  
-
   alias ElixirBet.Accounts
 
- def mount(_params, _session, socket) do
+  def mount(_params, _session, socket) do
     {:ok, users} = Accounts.list_users()
     {:ok, assign(socket, users: users)}
   end

@@ -45,6 +45,12 @@ roles = Role |> Repo.all()
 {:ok, assign(socket, roles: roles)}
 end
 
+# Mount function fetches roles from the database and assigns them to the socket.
+
+
+
+
+
 def handle_event("submit_permission", %{"role_id" => role_id, "action" => action, "resource" => resource}, socket) do
   # Create a new permission struct.
   permission = %Permission{
