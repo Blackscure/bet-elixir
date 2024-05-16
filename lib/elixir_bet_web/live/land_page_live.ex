@@ -1,100 +1,28 @@
 defmodule ElixirBetWeb.LandPageLive do
-use ElixirBetWeb, :live_view
-def render(assigns) do
-~L"""
-<div class="flex justify-center items-start mt-0">
-<!-- Games Section -->
-<div class="bg-gray-200 p-4">
-    <div class="ml-4 mr-64 pb-4">
-        <span class="font-bold text-orange-600">League Name</span>
-    </div>
-    <!-- Game -->
-    <div class="flex">
-        <!-- Team information -->
-        <div class="ml-4 mr-64">
-            <div class="mb-1">
-                <h6 class="text-sm font-semibold">Home Team</h6>
-                <h6 class="text-sm font-semibold">Away Team</h6>
-            </div>
-            <div class="mb-2">
-                <span class="text-xs">Time</span>
-                <span class="text-xs">Date</span>
-            </div>
-        </div>
-        <!-- Buttons -->
-        <div class="flex">
-            <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold py-2 px-4 rounded mr-2">Home Odd</button>
-            <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold py-2 px-4 rounded mr-2">Draw Odd</button>
-            <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold py-2 px-4 rounded">Away Odd</button>
-        </div>
-    </div>
-</div>
-<!-- Betslip Section -->
-<div class="bg-purple-800 p-4">
-    <div class=" bg-emLavender shadow-inner rounded-tl-lg rounded-br">
-        <!-- Bet Slip Item -->
-        <div class="ml-4 flex items-center">
-            <div class="w-8 h-8 flex items-center justify-center text-black rounded-full bg-orange-500 mr-4">
-                <h6 class="text-sm font-semibold">0</h6>
-            </div>
-            <div class="mr-64">
-                <h6 class="text-sm font-semibold pt-1">Bet Slip</h6>
-            </div>
-            <div class="mr-4">
-                <h6 class="text-sm font-semibold pt-1">0.0</h6>
-            </div>
-        </div>
-        <!-- Cart -->
-        <div class="bg-emDark p-4 mt-4">
-            <div class="bg-white shadow-inner rounded rounded-br">
-                <div class="ml-4 flex items-center">
-                    <div class="w-8 h-8 flex items-center justify-center text-black rounded-full bg-orange-500 mr-4">
-                        <h6 class="text-sm font-semibold">X</h6>
-                    </div>
-                    <div class="mr-64">
-                        <h6 class="text-sm font-semibold pt-1">Selected Team</h6>
-                        <h6 class="text-xs">1 X 2</h6>
-                        <h6 class="text-xs pt-1">Home Team - Away team</h6>
-                    </div>
-                    <div class="mr-4">
-                        <h6 class="text-sm font-semibold pt-1">0.0</h6>
-                    </div>
-                </div>
-                    <div class="bg-white">
-                        <div class="ml-4 flex items-center justify-between mt-2">
-                            <div class="h-8 flex items-center justify-center text-black mr-4">
-                                <h6 class="text-sm font-semibold">Stake</h6>
-                            </div>
+    use ElixirBetWeb, :live_view
+    alias ElixirBet.Matches.Match
+    alias ElixirBetWeb.MatchLive
+    alias ElixirBet.Teams.Team
+    alias ElixirBet.Repo
 
-                            <div class="mr-4">
-                                <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 py-1.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Stake" required />
-                            </div>
-                        </div>
-                </div>
-            <div class="bg-white">
-            <div class="ml-4 flex items-center justify-between mt-2">
-                <div class="h-8 flex items-center justify-center text-black mr-4">
-                    <p class="text-xs">To Win</p>
-                </div>
-                <div class="mr-4">
-                    <div class="w-8 h-8 flex items-center justify-center text-black mr-4">
-                        <h6 class="text-sm font-semibold">67.3</h6>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-sm text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Place  Bet</button>
-        </div>
-            </div>
+    def mount(_params, _session, socket) do
+        {:ok, assign(socket, matches: MatchLive.all_matches())}
+    end
+
+    def get_home_team(home_team_id) do
+    case Repo.get(Team, home_team_id) do
+      nil -> "Unknown team"
+      team -> team.name
+    end
+  end
+
+  def get_away_team(away_team_id) do
+    case Repo.get(Team, away_team_id) do
+      nil -> "Unknown team"
+      team -> team.name
+    end
+  end
 
 
-
-
-        </div>
-    </div>
-</div>
-</div>
-
-"""
-end
 
 end
