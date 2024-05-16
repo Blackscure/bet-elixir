@@ -12,8 +12,8 @@ defmodule ElixirBet.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :deleted_at, :naive_datetime
-
     timestamps(type: :utc_datetime)
+
   end
 
   @doc """
@@ -42,9 +42,14 @@ defmodule ElixirBet.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :msidn, :password])
+    |> assign_default_role()
     |> validate_required([:first_name, :last_name, :email, :msidn, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  defp assign_default_role(changeset) do
+    put_change(changeset, :role_id, 3)
   end
 
 

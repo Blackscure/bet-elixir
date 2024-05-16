@@ -8,6 +8,7 @@ alias ElixirBet.Permissions.Permission
 
 def render(assigns) do
 ~L"""
+
 <div class="leading-loose">
   <form phx-submit="submit_permission" class="p-10 bg-gray-900 rounded shadow-xl">
     <p class="text-lg text-white font-medium pb-4">Create Permission</p>
@@ -52,21 +53,29 @@ end
 
 
 def handle_event("submit_permission", %{"role_id" => role_id, "action" => action, "resource" => resource}, socket) do
-  # Create a new permission struct.
-  permission = %Permission{
-    role_id: String.to_integer(role_id),
-    action: action,
-    resource: resource
-  }
+  # Check if the permission already exists in the database.
+  existing_permission = Repo.get_by(Permission, role_id: String.to_integer(role_id), action: action, resource: resource)
 
-  # Attempt to insert the permission into the database.
-  case Repo.insert(permission) do
-    {:ok, _permission} ->
-      # On success, set a success flash message and send a response to the client to redirect.
-      {:noreply, socket |> put_flash(:info, "Permission created successfully") |> redirect(to: "/permissions")}
-    {:error, _changeset} ->
-      # On error, set an error flash message.
-      {:noreply, socket |> put_flash(:error, "Failed to create permission")}
+  case existing_permission do
+    nil ->
+      # Permission does not exist, proceed with insertion.
+      permission = %Permission{
+        role_id: String.to_integer(role_id),
+        action: action,
+        resource: resource
+      }
+
+      case Repo.insert(permission) do
+        {:ok, _permission} ->
+          # On success, set a success flash message and send a response to the client to redirect.
+          {:noreply, socket |> put_flash(:info, "Permission created successfully") |> redirect(to: "/permissions")}
+        {:error, _changeset} ->
+          # On error, set an error flash message.
+          {:noreply, socket |> put_flash(:error, "Failed to create permission")}
+      end
+    _ ->
+      # Permission already exists, set a flash message to inform the user.
+      {:noreply, socket |> put_flash(:error, "Permission already exists")}
   end
 end
 
