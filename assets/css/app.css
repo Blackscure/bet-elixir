@@ -109,3 +109,7 @@ form input[type="text"], input[type="email"], input[type="password"]:focus {
 .items-center {
   align-items: center;
 }
+
+.select-button.active {
+    background-color: orange;
+  }

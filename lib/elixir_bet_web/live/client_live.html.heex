@@ -97,9 +97,6 @@
                 </th> --%>
             </tr>
         </thead>
-        <%= if live_flash(@flash, :error) do %>
-            <p class="alert alert-danger" role="alert" phx-click="lsRemove" phx-value-key="error"><%= live_flash(@flash, :error) %></p>
-        <% end %>
         <tbody>
         <%= for user <- @users do %>
             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -116,7 +113,7 @@
                     <%= user.email %>
                 </td>
                   <td class="px-6 py-4">
-                    <%= user.msidn %>
+                    <%= get_role_name(user.role_id )%>
                 </td>
                   <td class="px-6 py-4">
                     <%= user.inserted_at %>
@@ -126,10 +123,7 @@
 
                 </td> --%>
                 <%!-- <%= IO.inspect(@users) %> --%>
-
     </tr>
-   
-
   <% end %>
       
         </tbody>

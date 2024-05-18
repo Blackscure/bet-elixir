@@ -84,6 +84,7 @@ defmodule ElixirBetWeb.Router do
       live "/history", BetHistoryLive
       live "/create-teams", CreateTeamLive
       live "/create-match", CreateMatchLive
+      live "/assign_role", AssignRoleLive
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

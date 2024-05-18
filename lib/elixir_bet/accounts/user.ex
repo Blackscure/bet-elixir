@@ -7,7 +7,7 @@ defmodule ElixirBet.Accounts.User do
     field :last_name, :string
     field :msidn, :string
     field :email, :string
-    belongs_to :role, ElixirBet.Role
+    belongs_to :role, ElixirBet.Roles.Role
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
@@ -16,41 +16,25 @@ defmodule ElixirBet.Accounts.User do
 
   end
 
-  @doc """
-  A user changeset for registration.
 
-  It is important to validate the length of both email and password.
-  Otherwise databases may truncate the email without warnings, which
-  could lead to unpredictable or insecure behaviour. Long passwords may
-  also be very expensive to hash for certain algorithms.
-
-  ## Options
-
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
-
-    * `:validate_email` - Validates the uniqueness of the email, in case
-      you don't want to validate the uniqueness of the email (like when
-      using this changeset for validations on a LiveView form before
-      submitting the form), this option can be set to `false`.
-      Defaults to `true`.
-  """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:first_name, :last_name, :email, :msidn, :password])
-    |> assign_default_role()
+    |> cast(attrs, [:first_name, :last_name, :email, :msidn, :password,:role_id])
     |> validate_required([:first_name, :last_name, :email, :msidn, :password])
     |> validate_email(opts)
     |> validate_password(opts)
   end
 
-  defp assign_default_role(changeset) do
-    put_change(changeset, :role_id, 3)
+  def changeset(user, attrs, opts \\ []) do
+    registration_changeset(user, attrs, opts)
   end
+
+  def role_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:role_id])
+    |> validate_required([:role_id])
+  end
+
 
 
   defp validate_email(changeset, opts) do

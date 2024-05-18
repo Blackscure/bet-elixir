@@ -1,4 +1,4 @@
-<div class="flex justify-center items-start mt-0">
+<%!-- <div class="flex justify-center items-start mt-0">
 <!-- Games Section -->
 <div class="bg-gray-200 p-4">
 <div class="ml-4 mr-64 pb-4">
@@ -20,10 +20,9 @@
   </div>
   <!-- Buttons -->
   <div class="flex">
-      <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-24 rounded "><%= match.home_odd%></button>
-      <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-24 rounded "><%= match.draw_odd %></button>
-      <button class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-24 rounded"><%= match.away_odd%></button>
-    
+      <button id="home_<%= match.id %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-4 rounded mr-2" onclick="addToBetSlip(<%= match.id %>, 'home')"><%= match.home_odd%></button>
+      <button id="draw_<%= match.id %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-4 rounded mr-2" onclick="addToBetSlip(<%= match.id %>, 'draw')"><%= match.draw_odd %></button>
+      <button id="away_<%= match.id %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold  px-4 rounded" onclick="addToBetSlip(<%= match.id %>, 'away')"><%= match.away_odd%></button>
   </div>
 </div>
 <% end %>
@@ -89,4 +88,4 @@
   </div>
 </div>
 </div>
-</div>
+</div> --%>
