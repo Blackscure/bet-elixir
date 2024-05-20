@@ -89,3 +89,100 @@
 </div>
 </div>
 </div> --%>
+
+    <div class="flex justify-center items-start mt-0">
+            <!-- Games Section -->
+            <div class="bg-gray-200 p-4">
+                <div class="ml-4 mr-64 pb-4">
+                <span class="font-bold text-orange-600">League Name</span>
+                </div>
+                <!-- Game -->
+                <%= for match <- @matches do %>
+                <div class="flex">
+                    <!-- Team information -->
+                    <div class="ml-4 mr-64">
+                    <div class="mb-1">
+                        <h6 class="text-sm font-semibold"><%= get_home_team(match.home_team_id) %></h6>
+                        <h6 class="text-sm font-semibold"><%= get_away_team(match.away_team_id) %></h6>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-xs"><%= match.match_time %></span>
+                        <span class="text-xs"><%= match.match_date %></span>
+                    </div>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="flex">
+                    <button phx-click="select_bet" phx-value-match_id="<%= match.id %>" phx-value-odd_type="home_odd" phx-value-odd_value="<%= match.home_odd %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold px-4 rounded mr-2">
+                        <%= match.home_odd %>
+                    </button>
+                    <button phx-click="select_bet" phx-value-match_id="<%= match.id %>" phx-value-odd_type="draw_odd" phx-value-odd_value="<%= match.draw_odd %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold px-4 rounded mr-2">
+                        <%= match.draw_odd %>
+                    </button>
+                    <button phx-click="select_bet" phx-value-match_id="<%= match.id %>" phx-value-odd_type="away_odd" phx-value-odd_value="<%= match.away_odd %>" class="bg-black hover:bg-orange-700 border border-orange-700 text-white font-bold px-4 rounded">
+                        <%= match.away_odd %>
+                    </button>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+            <!-- Betslip Section -->
+            <div class="bg-purple-800 p-4">
+                <div class="bg-emLavender shadow-inner rounded-tl-lg rounded-br">
+                <!-- Bet Slip Item -->
+                <div class="ml-4 flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center text-black rounded-full bg-orange-500 mr-4">
+                    <h6 class="text-sm font-semibold"><%= map_size(@selected_bets) %></h6>
+                    </div>
+                    <div class="mr-64">
+                    <h6 class="text-sm font-semibold pt-1">Bet Slip</h6>
+                    </div>
+                    <div class="mr-4">
+                    <h6 class="text-sm font-semibold pt-1"><%= total_odds(@selected_bets) %></h6>
+                    </div>
+                </div>
+                <!-- Cart -->
+                <div class="bg-emDark p-4 mt-4">
+                    <div class="bg-white shadow-inner rounded rounded-br">
+                    <%= for {match_id, bet} <- @selected_bets do %>
+                        <div class="ml-4 flex items-center">
+                        <div class="w-8 h-8 flex items-center justify-center text-black rounded-full bg-orange-500 mr-4">
+                            <h6 class="text-sm font-semibold">1</h6>
+                        </div>
+                        <div class="mr-64">
+                            <h6 class="text-sm font-semibold pt-1"><%= get_home_team(match_id) %> - <%= get_away_team(match_id) %></h6>
+                            <h6 class="text-xs"><%= bet.odd_type %></h6>
+                            <h6 class="text-xs pt-1"><%= bet.odd_value %></h6>
+                        </div>
+                        <div class="mr-4">
+                            <h6 class="text-sm font-semibold pt-1"><%= bet.odd_value %></h6>
+                        </div>
+                        </div>
+                    <% end %>
+                    <div class="bg-white">
+                        <div class="ml-4 flex items-center justify-between mt-2">
+                        <div class="h-8 flex items-center justify-center text-black mr-4">
+                            <h6 class="text-sm font-semibold">Stake</h6>
+                        </div>
+                        <div class="mr-4">
+                            <input type="text" id="stake" phx-debounce="blur" phx-change="update_stake" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 py-1.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Stake" required />
+                        </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="ml-4 flex items-center justify-between mt-2">
+                        <div class="h-8 flex items-center justify-center text-black mr-4">
+                            <p class="text-xs">To Win</p>
+                        </div>
+                        <div class="mr-4">
+                            <div class="w-8 h-8 flex items-center justify-center text-black mr-4">
+                            <h6 class="text-sm font-semibold"><%= to_win(@selected_bets) %></h6>
+                            </div>
+                        </div>
+                        </div>
+                        <button type="button" phx-click="place_bet" class="w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-sm text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Place Bet</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>

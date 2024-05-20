@@ -12,6 +12,7 @@ defmodule ElixirBetWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :put_user_token
   end
 
 
@@ -99,6 +100,14 @@ defmodule ElixirBetWeb.Router do
       on_mount: [{ElixirBetWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+    end
+  end
+
+  defp put_user_token(conn, _opts) do
+    if user = get_session(conn, :user_id) do
+      assign(conn, :user_id, user)
+    else
+      conn
     end
   end
 

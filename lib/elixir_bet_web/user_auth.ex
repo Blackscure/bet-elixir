@@ -27,10 +27,12 @@ defmodule ElixirBetWeb.UserAuth do
   """
   def log_in_user(conn, user, params \\ %{}) do
     token = Accounts.generate_user_session_token(user)
+    user_id = user.id
     user_return_to = get_session(conn, :user_return_to)
 
     conn
     |> renew_session()
+    |> put_session(:user_id, user_id)  # Store the User ID in the session
     |> put_token_in_session(token)
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: user_return_to || signed_in_path(conn))
@@ -92,9 +94,16 @@ defmodule ElixirBetWeb.UserAuth do
   """
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
+    user_id = get_session(conn, :user_id) || nil
     user = user_token && Accounts.get_user_by_session_token(user_token)
-    assign(conn, :current_user, user)
+
+    email = if user, do: user.email, else: nil
+
+    current_user = %{user_id: user_id, user: user, email: email}
+
+    assign(conn, :current_user, current_user)
   end
+
 
   defp ensure_user_token(conn) do
     if token = get_session(conn, :user_token) do
