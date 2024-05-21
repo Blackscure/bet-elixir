@@ -20,7 +20,7 @@ defmodule ElixirBet.Bets.Bet do
   @doc false
   def changeset(bet, attrs) do
     bet
-    |> cast(attrs, [:stake, :possible_win, :bet_time, :odd_type, :odd_value, :match_id, :user_id, :bet_expiry, :payment_method, :payment_no])
+    |> cast(attrs, [:stake, :possible_win, :bet_time, :odd_type, :odd_value, :match_id, :user_id])
     |> validate_required([:stake, :possible_win, :bet_time, :odd_type, :odd_value, :match_id, :user_id])
     |> maybe_add_optional_fields(attrs)
   end
