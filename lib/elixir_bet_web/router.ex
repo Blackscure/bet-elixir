@@ -75,12 +75,14 @@ defmodule ElixirBetWeb.Router do
       live "/permissions", PermissionLive
       live "/create-permission", CreatePermissionLive
       live "/leagues", LeagueLive
+      live "/home", LandPageLive
       live "/create-league", CreateLeagueLive
       live "/matches", MatchLive
       live "/users", ClientLive
       live "/teams", TeamLive
       live "/create-teams", CreateTeamLive
       live "/create-match", CreateMatchLive
+      live "/assign_role", AssignRoleLive
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
@@ -97,9 +99,5 @@ defmodule ElixirBetWeb.Router do
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
-
-
-
-
 
 end

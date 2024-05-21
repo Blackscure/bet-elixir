@@ -7,11 +7,11 @@ defmodule ElixirBet.Accounts.User do
     field :last_name, :string
     field :msidn, :string
     field :email, :string
-    belongs_to :role, ElixirBet.Role
+    belongs_to :role, ElixirBet.Roles.Role
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
-    field :deleted_at, :naive_datetime 
+    field :deleted_at, :naive_datetime
 
     timestamps(type: :utc_datetime)
   end
@@ -41,10 +41,21 @@ defmodule ElixirBet.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:first_name, :last_name, :email, :msidn, :password])
+    |> cast(attrs, [:first_name, :last_name, :email, :msidn, :password,:role_id])
     |> validate_required([:first_name, :last_name, :email, :msidn, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+
+  def changeset(user, attrs, opts \\ []) do
+    registration_changeset(user, attrs, opts)
+  end
+
+  def role_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:role_id])
+    |> validate_required([:role_id])
   end
 
 
