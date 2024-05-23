@@ -80,6 +80,8 @@ defmodule ElixirBetWeb.Router do
       live "/matches", MatchLive
       live "/users", ClientLive
       live "/teams", TeamLive
+      live "/bets", BetLive
+      live "/history", BetHistoryLive
       live "/create-teams", CreateTeamLive
       live "/create-match", CreateMatchLive
       live "/assign_role", AssignRoleLive

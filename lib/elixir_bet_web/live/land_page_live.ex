@@ -75,39 +75,213 @@ defmodule ElixirBetWeb.LandPageLive do
     end
   end
 
-    # Handle event for placing a bet
- def handle_event("place_bet", _params, socket) do
+  # Handle event for placing a bet
+  def handle_event("place_bet", _params, socket) do
   user_id = socket.assigns.current_user.id
   stake = socket.assigns.stake
   possible_win = socket.assigns.possible_win
   bet_time = DateTime.utc_now()
+  selected_bets = socket.assigns.selected_bets || []
 
-  # Iterate over the selected bets and insert them into the database
-  Enum.each(socket.assigns.selected_bets, fn selected_bet ->
-    bet_attrs = %{
-      stake: stake,
-      possible_win: possible_win,
-      bet_time: bet_time,
-      bet_expiry: selected_bet.bet_expiry, # You need to handle bet expiry appropriately
-      payment_method: "default_method", # Set this according to your logic
-      payment_no: "default_no", # Set this according to your logic
-      odd_type: selected_bet.odd_type,
-      odd_value: selected_bet.odd_value,
-      match_id: selected_bet.match_id,
-      user_id: user_id
-    }
-
-    case ElixirBet.Bets.Bet.changeset(%ElixirBet.Bets.Bet{}, bet_attrs) |> Repo.insert() do
-      {:ok, _bet} ->
-        :ok
-      {:error, changeset} ->
-        IO.inspect(changeset, label: "Bet Insertion Error")
-    end
-  end)
-
-  # Clear selected bets and reset stake and possible win
-  {:noreply, assign(socket, selected_bets: [], stake: Decimal.new(0), possible_win: Decimal.new(0))}
+  case insert_bet_with_matches(user_id, stake, possible_win, bet_time, selected_bets) do
+    :ok -> {:noreply, socket |> put_flash(:success, "All bets placed successfully!")}
+    :error -> {:noreply, socket |> put_flash(:error, "Some bets failed to place. Please try again.")}
+  end
 end
+
+defp insert_bet_with_matches(user_id, stake, possible_win, bet_time, selected_bets) do
+  # Collect unique bet attributes from the first selected_bet
+  case selected_bets do
+    [first_selected_bet | _] ->
+      bet_attrs = %{
+        stake: stake,
+        possible_win: possible_win,
+        bet_time: bet_time,
+        odd_type: first_selected_bet.odd_type,
+        odd_value: first_selected_bet.odd_value,
+        user_id: user_id
+      }
+
+      case ElixirBet.Bets.Bet.changeset(%ElixirBet.Bets.Bet{}, bet_attrs) |> Repo.insert() do
+        {:ok, bet} ->
+          Enum.reduce_while(selected_bets, :ok, fn selected_bet, acc ->
+            match_id = Map.get(selected_bet, :match_id)
+
+            match_id =
+              case Integer.parse(match_id) do
+                {int, _} -> int
+                :error -> nil
+              end
+
+            if match_id do
+              bet_match_attrs = %{
+                bet_id: bet.id,
+                match_id: match_id
+              }
+
+              case ElixirBet.Bets.BetMatch.changeset(%ElixirBet.Bets.BetMatch{}, bet_match_attrs) |> Repo.insert() do
+                {:ok, _bet_match} -> {:cont, acc}
+                {:error, changeset} ->
+                  IO.inspect(changeset, label: "BetMatch Insertion Error")
+                  {:halt, :error}
+              end
+            else
+              IO.puts("Warning: Invalid match_id for selected bet")
+              {:halt, :error}
+            end
+          end)
+        {:error, changeset} ->
+          IO.inspect(changeset, label: "Bet Insertion Error")
+          :error
+      end
+    _ ->
+      IO.puts("Warning: No selected bets provided")
+      :error
+  end
+end
+
+
+defp insert_bet_with_matches(user_id, stake, possible_win, bet_time, selected_bets) do
+  # Collect unique bet attributes from the first selected_bet
+  case selected_bets do
+    [first_selected_bet | _] ->
+      bet_attrs = %{
+        stake: stake,
+        possible_win: possible_win,
+        bet_time: bet_time,
+        odd_type: first_selected_bet.odd_type,
+        odd_value: first_selected_bet.odd_value,
+        user_id: user_id
+      }
+
+      case ElixirBet.Bets.Bet.changeset(%ElixirBet.Bets.Bet{}, bet_attrs) |> Repo.insert() do
+        {:ok, bet} ->
+          Enum.reduce_while(selected_bets, :ok, fn selected_bet, acc ->
+            match_id = Map.get(selected_bet, :match_id)
+
+            match_id =
+              case Integer.parse(match_id) do
+                {int, _} -> int
+                :error -> nil
+              end
+
+            if match_id do
+              bet_match_attrs = %{
+                bet_id: bet.id,
+                match_id: match_id
+              }
+
+              case ElixirBet.Bets.BetMatch.changeset(%ElixirBet.Bets.BetMatch{}, bet_match_attrs) |> Repo.insert() do
+                {:ok, _bet_match} -> {:cont, acc}
+                {:error, changeset} ->
+                  IO.inspect(changeset, label: "BetMatch Insertion Error")
+                  {:halt, :error}
+              end
+            else
+              IO.puts("Warning: Invalid match_id for selected bet")
+              {:halt, :error}
+            end
+          end)
+        {:error, changeset} ->
+          IO.inspect(changeset, label: "Bet Insertion Error")
+          :error
+      end
+    _ ->
+      IO.puts("Warning: No selected bets provided")
+      :error
+  end
+end
+
+
+    defp insert_bet_with_matches(user_id, stake, possible_win, bet_time, selected_bets) do
+      bet_attrs = %{
+        stake: stake,
+        possible_win: possible_win,
+        bet_time: bet_time,
+        user_id: user_id
+      }
+
+      case ElixirBet.Bets.Bet.changeset(%ElixirBet.Bets.Bet{}, bet_attrs) |> Repo.insert() do
+        {:ok, bet} ->
+          Enum.reduce_while(selected_bets, :ok, fn selected_bet, acc ->
+            match_id = Map.get(selected_bet, :match_id)
+
+            match_id =
+              case Integer.parse(match_id) do
+                {int, _} -> int
+                :error -> nil
+              end
+
+            if match_id do
+              bet_match_attrs = %{
+                bet_id: bet.id,
+                match_id: match_id
+              }
+
+              case ElixirBet.Bets.BetMatch.changeset(%ElixirBet.Bets.BetMatch{}, bet_match_attrs) |> Repo.insert() do
+                {:ok, _bet_match} -> {:cont, acc}
+                {:error, changeset} ->
+                  IO.inspect(changeset, label: "BetMatch Insertion Error")
+                  {:halt, :error}
+              end
+            else
+              IO.puts("Warning: Invalid match_id for selected bet")
+              {:halt, :error}
+            end
+          end)
+        {:error, changeset} ->
+          IO.inspect(changeset, label: "Bet Insertion Error")
+          :error
+      end
+    end
+
+
+    defp insert_bet_with_matches(user_id, stake, possible_win, bet_time, selected_bets) do
+      bet_attrs = %{
+        stake: stake,
+        possible_win: possible_win,
+        bet_time: bet_time,
+        user_id: user_id
+      }
+
+      case ElixirBet.Bets.Bet.changeset(%ElixirBet.Bets.Bet{}, bet_attrs) |> Repo.insert() do
+        {:ok, bet} ->
+          Enum.reduce_while(selected_bets, :ok, fn selected_bet, acc ->
+            match_id = Map.get(selected_bet, :match_id)
+
+            if match_id do
+              # Ensure match_id is an integer and not a string
+              match_id =
+                case Integer.parse(match_id) do
+                  {int, _} -> int
+                  :error -> nil
+                end
+
+              if match_id do
+                bet_match_attrs = %{
+                  bet_id: bet.id,
+                  match_id: match_id
+                }
+
+                case ElixirBet.Bets.BetMatch.changeset(%ElixirBet.Bets.BetMatch{}, bet_match_attrs) |> Repo.insert() do
+                  {:ok, _bet_match} -> {:cont, acc}
+                  {:error, changeset} ->
+                    IO.inspect(changeset, label: "BetMatch Insertion Error")
+                    {:halt, :error}
+                end
+              else
+                {:halt, :error}
+              end
+            else
+              {:halt, :error}
+            end
+          end)
+        {:error, changeset} ->
+          IO.inspect(changeset, label: "Bet Insertion Error")
+          :error
+      end
+    end
+
 
 
   # Handle event for removing a bet
