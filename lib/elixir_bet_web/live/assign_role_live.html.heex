@@ -1,12 +1,6 @@
 <div class="flex h-screen bg-gray-200">
   <!-- Sidebar -->
  <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
-        <div class="p-6">
-            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
-            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button>
-        </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href={~p"/dashboard"} class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-tachometer-alt mr-3"></i>
@@ -61,33 +55,23 @@
  
 </div>
 
-<div class="leading-loose">
-  <form phx-submit="create_role" phx-change="validate_input" class="p-10 bg-gray-900 rounded shadow-xl">
-    <div class="">
-      <label class="block text-sm text-gray-600" for="role">Role Name</label>
-      <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Role</option>
-        <%= for role <- @roles do %>
-          <option value="<%= role.id %>"><%= role.name %></option>
-        <% end %>
-      </select>
-    </div>
+  <div class="leading-loose">
+      <form phx-submit="assign_role_to_user" class="p-10 bg-gray-900 rounded shadow-xl">
+        <div>
+          <label class="block text-sm text-gray-600" for="role">Role Name</label>
+          <%= select "role", :id, @roles, prompt: "Select Role", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
 
-    <div class="mt-2">
-      <label class="block text-sm text-gray-600" for="user">User</label>
-      <select id="user" name="user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>User</option>
-        <%= for user <- @users do %>
-          <option value="<%= user.id %>"><%= "#{user.first_name} #{user.last_name}" %></option>
-        <% end %>
-      </select>
-    </div>
+        <div class="mt-2">
+          <label class="block text-sm text-gray-600" for="user">User</label>
+          <%= select "user", :id, @users, prompt: "Select User", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
 
-    <div class="mt-6">
-      <button class="px-4 py-1 text-white font-light tracking-wider bg-orange-700 rounded" type="submit">Submit</button>
+        <div class="mt-6">
+          <button class="px-4 py-1 text-white font-light tracking-wider bg-orange-700 rounded" type="submit">Submit</button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
 
 
 <div class="relative overflow-x-auto shadow-md ">

@@ -25,64 +25,66 @@ defmodule ElixirBetWeb.ClientLive do
 
   def render(assigns) do
     ~L"""
-
-<div class="relative overflow-x-auto shadow-md ">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    First Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Last Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Mobile Numebr
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Email
-                </th>
-                 <th scope="col" class="px-6 py-3">
-                    Role
-                </th>
-                 <th scope="col" class="px-6 py-3">
-                    Created At
-                </th>
-
-                <th scope="col" class="px-6 py-3">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <%= for user <- @users do %>
-            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <%= user.first_name %>
-                </td>
-                <td class="px-6 py-4">
-                    <%= user.last_name %>
-                </td>
-                 <td class="px-6 py-4">
-                    <%= user.msidn %>
-                </td>
-                  <td class="px-6 py-4">
-                    <%= user.email %>
-                </td>
-                  <td class="px-6 py-4">
-                    <%= get_role_name(user.role_id )%>
-                </td>
-                  <td class="px-6 py-4">
-                    <%= user.inserted_at %>
-                </td>
-                <td class="px-6 py-4">
-                    <button phx-click="soft_delete_user" phx-value-id="<%= user.id %>" phx-value-role-id="<%= user.role_id %>">Delete</button>
-                </td>
-    </tr>
-  <% end %>
-        </tbody>
-    </table>
+      <div class="relative overflow-x-auto shadow-md pt-4">
+        <p class="text-lg text-black font-medium pb-4 ml-4">Create League</p>
+    <div class="w-full">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        First Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Last Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Mobile Number
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Role
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Created At
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for user <- @users do %>
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <%= user.first_name %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= user.last_name %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= user.msidn %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= user.email %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= get_role_name(user.role_id )%>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= user.inserted_at %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button phx-click="soft_delete_user" phx-value-id="<%= user.id %>" phx-value-role-id="<%= user.role_id %>">Delete</button>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
 </div>
+
     """
   end
 

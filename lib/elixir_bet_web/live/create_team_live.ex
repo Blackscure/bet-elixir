@@ -10,7 +10,7 @@ defmodule ElixirBetWeb.CreateTeamLive do
   def render(assigns) do
     ~L"""
   <div class="leading-loose">
-      <form phx-submit="create_team">
+      <form phx-submit="create_team" class="p-10 bg-gray-900 rounded shadow-xl">
         <p class="text-lg text-white font-medium pb-4">Create team</p>
 
         <div class="inline-block mt-2 w-full pr-1">
