@@ -26,12 +26,7 @@ defmodule ElixirBetWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/", ElixirBetWeb do
-    pipe_through :browser
-
-    get "/users", UserController, :index
-  end
-
+  
 
   # Other scopes may use custom stacks.
   # scope "/api", ElixirBetWeb do
