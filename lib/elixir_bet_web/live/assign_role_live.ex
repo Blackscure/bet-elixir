@@ -14,12 +14,7 @@ defmodule ElixirBetWeb.AssignRoleLive do
     {:ok, assign(socket, changeset: %{}, users: users, roles: roles)}
   end
 
-  # def get_role_name(role_id) do
-  #   case Repo.get(Role, role_id) do
-  #     nil -> "Unknown role"
-  #     role -> role.name
-  #   end
-  # end
+
 
   def render(assigns) do
     ~L"""

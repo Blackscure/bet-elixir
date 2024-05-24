@@ -45,6 +45,7 @@ defmodule ElixirBet.Accounts.User do
     |> validate_required([:first_name, :last_name, :email, :msidn, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> put_change(:role_id, 3)
   end
 
 

@@ -64,6 +64,7 @@ defp redirect_super_user(conn, user) do
 end
 
 
+
   def delete(conn, _params) do
     conn
     |> put_flash(:info, "Logged out successfully.")

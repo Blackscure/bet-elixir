@@ -76,7 +76,7 @@ defmodule ElixirBetWeb.ClientLive do
                         <%= user.inserted_at %>
                     </td>
                     <td class="px-6 py-4">
-                        <button phx-click="soft_delete_user" phx-value-id="<%= user.id %>" phx-value-role-id="<%= user.role_id %>">Delete</button>
+                        <button>Delete</button>
                     </td>
                 </tr>
                 <% end %>
