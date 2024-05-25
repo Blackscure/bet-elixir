@@ -14,10 +14,6 @@ defmodule ElixirBetWeb.Router do
     plug :fetch_current_user
   end
 
-
-
-
-
   pipeline :api do
     plug :accepts, ["json"]
   end

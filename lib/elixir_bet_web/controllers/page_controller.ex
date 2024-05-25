@@ -8,3 +8,5 @@ defmodule ElixirBetWeb.PageController do
     render(conn, :home)
   end
 end
+
+

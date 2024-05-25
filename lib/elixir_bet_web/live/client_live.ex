@@ -5,10 +5,36 @@ defmodule ElixirBetWeb.ClientLive do
   alias ElixirBet.Repo
   alias ElixirBet.Roles.Role
 
-  def mount(_params, _session, socket) do
-      {:ok, users} = Accounts.list_users()
-      {:ok, assign(socket, users: users)}
+def mount(_params, _session, socket) do
+  current_user = socket.assigns.current_user
+  current_user_role_id = current_user.role_id
+
+  users =
+    if current_user_role_id == 1 || current_user_role_id == 2 do
+      Accounts.list_users()
+    else
+      [%{
+        id: current_user.id,
+        first_name: current_user.first_name,
+        last_name: current_user.last_name,
+        msidn: current_user.msidn,
+        email: current_user.email,
+        role_id: current_user.role_id,
+        inserted_at: current_user.inserted_at,
+        updated_at: current_user.updated_at
+      }]
     end
+
+  users = case users do
+    {:ok, users_list} -> users_list
+    _ -> users
+  end
+
+  {:ok, users} = {:ok, users}
+  IO.inspect(users, label: "Users")
+  {:ok, assign(socket, users: users)}
+end
+
 
   def get_role_name(nil), do: "Unknown role"
   def get_role_name(role_id) do
