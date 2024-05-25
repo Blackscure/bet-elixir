@@ -4,7 +4,44 @@ defmodule ElixirBetWeb.CreateTeamLive do
   alias ElixirBet.{Repo, Teams.Team, Leagues.League}
 
   def mount(_params, _session, socket) do
+
     {:ok, assign(socket, leagues: fetch_leagues(), flash_message: nil)}
+  end
+
+  def handle_event("create_team", %{"team" => team_params}, socket) do
+    current_user = socket.assigns.current_user
+
+    # Check if current user has role_id 1
+    case current_user.role_id do
+      1 ->
+        changeset = Team.changeset(%Team{}, team_params)
+
+        case Repo.insert(changeset) do
+          {:ok, _team} ->
+            socket =
+              socket
+              |> put_flash(:success, "Team created successfully!")
+              |> redirect(to: "/teams")
+
+            {:noreply, socket}
+          {:error, changeset} ->
+            Logger.error("Failed to insert team changeset: #{inspect(changeset)}")
+            {:noreply, assign(socket, changeset: changeset)}
+        end
+      _ ->
+        socket =
+          socket
+          |> put_flash(:error, "You don't have permission to create a team.")
+          |> redirect(to: "/teams")
+
+        {:noreply, socket}
+    end
+  end
+
+
+
+  defp fetch_leagues do
+    Repo.all(League)
   end
 
   def render(assigns) do
@@ -90,25 +127,5 @@ defmodule ElixirBetWeb.CreateTeamLive do
 </div>
     """
   end
-def handle_event("create_team", %{"team" => team_params}, socket) do
-  changeset = Team.changeset(%Team{}, team_params)
 
-  case Repo.insert(changeset) do
-    {:ok, _team} ->
-      socket =
-        socket
-        |> put_flash(:info, "Team created successfully!")
-        |> redirect(to: "/teams")
-
-      {:noreply, socket}
-    {:error, changeset} ->
-      Logger.error("Failed to insert team changeset: #{inspect(changeset)}")
-      {:noreply, assign(socket, changeset: changeset)}
-  end
-end
-
-
-  defp fetch_leagues do
-    Repo.all(League)
-  end
 end

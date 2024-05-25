@@ -8,9 +8,6 @@ defmodule ElixirBetWeb.AssignRoleLive do
 
 
   def mount(_params, _session, socket) do
-    current_user = socket.assigns.current_user
-    current_user_role_id = current_user.role_id
-
     users = Repo.all(User)
     roles = Repo.all(Role)
 
@@ -50,8 +47,6 @@ defmodule ElixirBetWeb.AssignRoleLive do
         {:noreply, put_flash(socket, :error, "You don't have permission to assign roles.")}
     end
   end
-
-
 
   def render(assigns) do
     ~L"""

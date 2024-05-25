@@ -14,10 +14,7 @@ defmodule ElixirBetWeb.CreateMatchLive do
     <div class="flex h-screen bg-gray-200">
   <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
     <nav class="text-white text-base font-semibold pt-3">
-      <button onclick="location.href='/dashboard'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-        <i class="fas fa-tachometer-alt mr-3"></i>
-        Dashboard
-      </button>
+
       <button onclick="location.href='/users'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
         <i class="fas fa-sticky-note mr-3"></i>
         Users
@@ -138,21 +135,30 @@ defmodule ElixirBetWeb.CreateMatchLive do
 
   # Handle the form submission
 def handle_event("create_match", %{"match" => match_params}, socket) do
-  IO.inspect(match_params, label: "Match Params") # Add this line to inspect the match_params
+  current_user = socket.assigns.current_user
 
-  changeset = Match.changeset(%Match{}, match_params)
+  # Check if current user has role_id 1
+  if current_user.role_id == 1 do
+    IO.inspect(match_params, label: "Match Params") # Add this line to inspect the match_params
 
-  IO.inspect(changeset, label: "Changeset") # Add this line to inspect the changeset
+    changeset = Match.changeset(%Match{}, match_params)
 
-  case Repo.insert(changeset) do
-    {:ok, _match} ->
-      IO.puts("Match inserted successfully")
-      {:noreply, socket |> put_flash(:info, "Match created successfully!") |> redirect(to: "/matches")}
-    {:error, changeset} ->
-      IO.puts("Error inserting match: #{inspect(changeset.errors)}")
-      {:noreply, assign(socket, changeset: changeset)}
+    IO.inspect(changeset, label: "Changeset") # Add this line to inspect the changeset
+
+    case Repo.insert(changeset) do
+      {:ok, _match} ->
+        IO.puts("Match inserted successfully")
+        {:noreply, socket |> put_flash(:success, "Match created successfully!") |> redirect(to: "/matches")}
+      {:error, changeset} ->
+        IO.puts("Error inserting match: #{inspect(changeset.errors)}")
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  else
+    # User does not have permission to create a match
+    {:noreply, socket |> put_flash(:error, "You don't have permission to create a match.")}
   end
 end
+
 
 
   # Fetch all teams to populate the dropdowns
