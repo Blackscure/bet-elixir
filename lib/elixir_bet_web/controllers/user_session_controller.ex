@@ -4,7 +4,7 @@ defmodule ElixirBetWeb.UserSessionController do
   alias ElixirBet.Accounts
   alias ElixirBetWeb.UserAuth
 
-  def create(conn, %{"_action" => "registered"} = params) do
+    def create(conn, %{"_action" => "registered"} = params) do
     create(conn, params, "Account created successfully!")
   end
 
@@ -18,52 +18,21 @@ defmodule ElixirBetWeb.UserSessionController do
     create(conn, params, "Welcome back!")
   end
 
-  # defp create(conn, %{"user" => user_params}, info) do
-  #   %{"email" => email, "password" => password} = user_params
-
-  #   if user = Accounts.get_user_by_email_and_password(email, password) do
-  #     conn
-  #     |> put_flash(:info, info)
-  #     |> UserAuth.log_in_user(user, user_params)
-  #   else
-  #     # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
-  #     conn
-  #     |> put_flash(:error, "Invalid email or password")
-  #     |> put_flash(:email, String.slice(email, 0, 160))
-  #     |> redirect(to: ~p"/users/log_in")
-  #   end
-  # end
-
   defp create(conn, %{"user" => user_params}, info) do
-  %{"email" => email, "password" => password} = user_params
+    %{"email" => email, "password" => password} = user_params
 
-  if user = Accounts.get_user_by_email_and_password(email, password) do
-    conn
-    |> put_flash(:info, info)
-    |> UserAuth.log_in_user(user, user_params)
-    |> redirect_super_user(user)
-  else
-    # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
-    conn
-    |> put_flash(:error, "Invalid email or password")
-    |> put_flash(:email, String.slice(email, 0, 160))
-    |> redirect(to: ~p"/users/log_in")
+    if user = Accounts.get_user_by_email_and_password(email, password) do
+      conn
+      |> put_flash(:info, info)
+      |> UserAuth.log_in_user(user, user_params)
+    else
+      # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
+      conn
+      |> put_flash(:error, "Invalid email or password")
+      |> put_flash(:email, String.slice(email, 0, 160))
+      |> redirect(to: ~p"/users/log_in")
+    end
   end
-end
-
- def is_superuser(user) do
-    user.superuser == true
-  end
-
-defp redirect_super_user(conn, user) do
-  if Accounts.is_superuser(user) do
-    redirect(conn, to: "/dashboard")
-  else
-    conn
-  end
-end
-
-
 
   def delete(conn, _params) do
     conn

@@ -11,6 +11,55 @@ defmodule ElixirBetWeb.CreateMatchLive do
   # Render function to generate the HTML for the LiveView
   def render(assigns) do
     ~L"""
+    <div class="flex h-screen bg-gray-200">
+  <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+    <nav class="text-white text-base font-semibold pt-3">
+      <button onclick="location.href='/dashboard'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-tachometer-alt mr-3"></i>
+        Dashboard
+      </button>
+      <button onclick="location.href='/users'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-sticky-note mr-3"></i>
+        Users
+      </button>
+      <button onclick="location.href='/roles'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-sticky-note mr-3"></i>
+        Roles
+      </button>
+      <button onclick="location.href='/permissions'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-table mr-3"></i>
+        Permissions
+      </button>
+      <button onclick="location.href='/teams'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-table mr-3"></i>
+        Teams
+      </button>
+      <button onclick="location.href='/leagues'" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+        <i class="fas fa-align-left mr-3"></i>
+        Leagues
+      </button>
+      <button onclick="location.href='/matches'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-tablet-alt mr-3"></i>
+        Matches
+      </button>
+      <button onclick="location.href='/wallets'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-tablet-alt mr-3"></i>
+        Wallet
+      </button>
+      <button onclick="location.href='/bets'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-tablet-alt mr-3"></i>
+        Bets
+      </button>
+      <button onclick="location.href='/history'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-tablet-alt mr-3"></i>
+        Bet History
+      </button>
+    </nav>
+  </aside>
+
+  <main class="w-full flex-grow p-6">
+    <h1 class="text-3xl text-black pb-6">Matches</h1>
+
         <div class="leading-loose">
           <form phx-submit="create_match" class="p-10 bg-gray-900 rounded shadow-xl">
             <p class="text-lg text-white font-medium pb-4">Match Information</p>
@@ -82,7 +131,8 @@ defmodule ElixirBetWeb.CreateMatchLive do
           </form>
         </div>
 
-
+  </main>
+</div>
     """
   end
 

@@ -18,6 +18,8 @@ defmodule ElixirBetWeb.LandPageLive do
     {:ok, assign(socket, matches: matches, selected_bets: selected_bets, stake: stake, possible_win: possible_win)}
   end
 
+  
+
   # Handle event for selecting an odd (bet) on a match
   def handle_event("select_odd", %{"match_id" => match_id, "odd_type" => odd_type, "odd_value" => odd_value}, socket) do
     # Fetch the match by ID and preload associated teams

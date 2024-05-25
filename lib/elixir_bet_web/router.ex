@@ -16,6 +16,8 @@ defmodule ElixirBetWeb.Router do
 
 
 
+
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -91,6 +93,9 @@ defmodule ElixirBetWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
   end
+
+
+
 
   scope "/", ElixirBetWeb do
     pipe_through [:browser]
