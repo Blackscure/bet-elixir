@@ -1,7 +1,75 @@
 defmodule ElixirBetWeb.CreatePermissionLive do
   use ElixirBetWeb, :live_view
 
+  @impl true
+  def render(assigns) do
+    ~L"""
+    <div class="flex h-screen bg-gray-200">
+      <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <nav class="text-white text-base font-semibold pt-3">
+          <button onclick="location.href='/dashboard'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tachometer-alt mr-3"></i>
+            Dashboard
+          </button>
+          <button onclick="location.href='/users'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-sticky-note mr-3"></i>
+            Users
+          </button>
+          <button onclick="location.href='/roles'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-sticky-note mr-3"></i>
+            Roles
+          </button>
+          <button onclick="location.href='/permissions'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-table mr-3"></i>
+            Permissions
+          </button>
+          <button onclick="location.href='/teams'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-table mr-3"></i>
+            Teams
+          </button>
+          <button onclick="location.href='/leagues'" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+            <i class="fas fa-align-left mr-3"></i>
+            Leagues
+          </button>
+          <button onclick="location.href='/matches'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            Matches
+          </button>
+          <button onclick="location.href='/wallets'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            Wallet
+          </button>
+          <button onclick="location.href='/bets'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            Bets
+          </button>
+          <button onclick="location.href='/history'" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tablet-alt mr-3"></i>
+            Bet History
+          </button>
+        </nav>
+      </aside>
 
-
-
+      <main class="w-full flex-grow p-6">
+        <h1 class="text-3xl text-black pb-6">Permission</h1>
+        <div class="flex flex-col flex-grow ml-2 mb-4 mr-4">
+          <div class="leading-loose">
+            <form class="p-10 bg-gray-900 rounded shadow-xl">
+              <p class="text-lg text-white font-medium pb-4">Create Permission</p>
+              <div class="mb-5">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="League Name" required />
+              </div>
+              <div class="mt-6">
+                <button class="px-4 py-1 text-white font-light tracking-wider bg-orange-700 rounded" type="submit">Save</button>
+              </div>
+            </form>
+          </div>
+          <div class="relative overflow-x-auto shadow-md">
+          </div>
+        </div>
+      </main>
+    </div>
+    """
+  end
 end

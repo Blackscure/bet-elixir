@@ -3,7 +3,7 @@ defmodule ElixirBet.Permissions.Permission do
   import Ecto.Changeset
 
   schema "permissions" do
-   
+    field :name, :string
     belongs_to :role, ElixirBet.Roles.Role
 
     timestamps(type: :utc_datetime)
@@ -12,7 +12,7 @@ defmodule ElixirBet.Permissions.Permission do
   @doc false
   def changeset(permission, attrs) do
     permission
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:name, :role_id])
+    |> validate_required([:name])
   end
 end
